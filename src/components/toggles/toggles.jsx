@@ -1,52 +1,64 @@
-import { useState } from 'react';
 import styles from './toggles.module.css'
+import React from 'react';
 
+class Toggles extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            showText: true,
+            selected: 'yes'
+        }
+        this.handleCheck = this.handleCheck.bind(this)
+    }
 
-function Toggles() {
-    const [selected, setSelected] = useState('yes')
-    const [showText, setShowText] = useState(true)
+    // handleCheck(e) {
+    //     this.setState({selected: e.target.value})
+    // }
 
-    return (
-        <div className={styles.container}>
-            <div>
-                <button onClick={(e) => setShowText(!showText)}>Скрыть текст</button>
-                { showText ? 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus minima ipsam magnam consequatur! Dolorum quas laboriosam, inventore optio voluptas eos.</p> 
-                    : null }
-            </div>
-            <div>
-                <div className={styles.question}>
-                    <span>Вы уверены что хотите закончить курсы?</span>
-                    <input
-                        type="radio"
-                        id="yes"
-                        name="choose"
-                        value="yes"
-                        checked={selected === 'yes'}
-                    />
-                    <label htmlFor="yes">Yes</label>
+    render() {
 
-                    <input
-                        type="radio"
-                        id="no"
-                        name="choose"
-                        value="no"
-                        checked={selected === 'no'}
-                    />
-                    <label htmlFor="no">No</label>
+        return (
+            <div className={styles.container}>
+                <div>
+                    <button onClick={(e) => setShowText(!this.state.showText)}>Скрыть текст</button>
+                    { this.state.showText ? 
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus minima ipsam magnam consequatur! Dolorum quas laboriosam, inventore optio voluptas eos.</p> 
+                        : null }
+                </div>
+                <div>
+                    <div className={styles.question}>
+                        <span>Вы уверены что хотите закончить курсы?</span>
+                        <input
+                            type="radio"
+                            id="yes"
+                            name="choose"
+                            value="yes"
+                            checked={this.state.selected === 'yes'}
+                        />
+                        <label htmlFor="yes">Yes</label>
 
-                    <input
-                        type="radio"
-                        id="maybe"
-                        name="choose"
-                        value="maybe"
-                        checked={selected === 'maybe'}
-                    />
-                    <label htmlFor="maybe">Maybe</label>
+                        <input
+                            type="radio"
+                            id="no"
+                            name="choose"
+                            value="no"
+                            checked={this.state.selected === 'no'}
+                        />
+                        <label htmlFor="no">No</label>
+
+                        <input
+                            type="radio"
+                            id="maybe"
+                            name="choose"
+                            value="maybe"
+                            checked={this.state.selected === 'maybe'}
+                        />
+                        <label htmlFor="maybe">Maybe</label>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+
+    )}
 }
 
 export default Toggles;

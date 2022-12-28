@@ -1,34 +1,55 @@
 import styles from './postList.module.css'
 import Post from '../post/post'
+import React from 'react'
+import axios from 'axios'
 
-function PostList() {
-    const posts = [
-        {id: 1, title: "Lorem, ipsum.", descrition: "Lorem ipsum dolor sit amet.", longread: false},
-        {id: 2, title: "Lorem, lorem.", descrition: "Lorem ipsum dolor sit.", longread: true}
-    ]
-
-    const addPost = (e) => {
-
+class PostList extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            posts: [],
+            searchToken: ''
+        }
+        this.handleSearch = this.handleSearch.bind(this)
     }
     
+    componentDidMount() {
+        axios.get(`https://jsonplaceholder.typicode.com/posts`)
+        .then(res => {
+            const posts = res.data;
+            this.setState({ posts });
+        })
+    }
 
-    return (
-        <div className={styles.container}>
-            <form className={styles.postForm}>
-                <input type="text" name="title" placeholder='Заголовок поста'/>
-                <input type="text" name="description" placeholder='Короткое описание'/>
-                <label> Длинный пост: <input type="checkbox" name="longpost" /></label>
-                <label> Количество слов: <input type="number" name="wordscount"/></label>
-                <button>Добавить пост</button>
-            </form>
+    showDetails(e){
+        axios.get(`https://jsonplaceholder.typicode.com/posts`)
+        .then(res => {
+            const posts = res.data;
+            this.setState({ posts });
+        })
+    }
 
-            <div className="posts">
-                {posts.map( p => 
-                    <Post key={p.id} post={p} />
-                )}
+    handleSearch(e) {
+        console.log(typeof e.target.value, e.target.value);
+        this.setState({searchToken: e.target.value})
+    }
+
+    render() {
+        return (
+            <div className={styles.container}>
+                <form className={styles.postForm}>
+                    <input type="text" name="title" placeholder='Поиск по названию' onChange={this.handleSearch} value={this.state.searchToken}/>
+                    <button>Поиск</button>
+                </form> 
+
+                <div className="posts">
+                    {this.state.posts.map( p => 
+                        <Post key={p.id} post={p} />
+                    )}
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default PostList;
