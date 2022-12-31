@@ -11,9 +11,9 @@ class Toggles extends React.Component {
         this.handleCheck = this.handleCheck.bind(this)
     }
 
-    // handleCheck(e) {
-    //     this.setState({selected: e.target.value})
-    // }
+    handleCheck(e) {
+        this.setState({selected: e.target.value})
+    }
 
     render() {
 

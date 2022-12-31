@@ -1,18 +1,16 @@
-import React from "react";
+// import { useState, useEffect } from "react";
+// import { useParams } from "react-router-dom";
+// import API from '../../api'
 
 
-class Post extends React.Component {
-    constructor(props) {
-        super(props)
+const Post = ({post}) => {
 
-    } 
-    render() {
-        return (
-            <div>
-                {this.props.post.title}
-            </div>
-        )
-    }
+    return (
+        <div>
+            {post.title}
+        </div>
+    )
+
 }
 
 export default Post;

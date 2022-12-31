@@ -1,49 +1,35 @@
-import styles from './postList.module.css'
-import Post from '../post/post'
-import React from 'react'
-import axios from 'axios'
+import styles from '../postList/postList.module.css'
+import { useState, useEffect } from 'react'
+import API from '../../api'
 
-class UserList extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            users: [],
-        }
 
-    }
+const UserList = () => {
+    const [users, setUsers] = useState([])
     
-    componentDidMount() {
-        axios.get(`https://jsonplaceholder.typicode.com/users`)
+    useEffect(() => {
+        API.get(`/users`)
         .then(res => {
-            const posts = res.data;
-            this.setState({ posts });
+            const data = res.data;
+            setUsers(data);
         })
-    }
+    }, [])
 
-    showDetails(e){
-        axios.get(`https://jsonplaceholder.typicode.com/users`)
-        .then(res => {
-            const users = res.data;
-            this.setState({ users });
-        })
-    }
 
-    render() {
-        return (
-            <div className={styles.container}>
+    return (
+        <div className={styles.container}>
 
-                <div className="posts">
-                    <ul>
+            <div className="posts">
+                <ul>
 
-                        {this.state.users.map( u => 
-                            <li>{u.name}</li>
-                        )}
-                    </ul>
+                    {users.map( u => 
+                        <li>{u.name}</li>
+                    )}
+                </ul>
 
-                </div>
             </div>
-        )
-    }
+        </div>
+    )
+
 }
 
 export default UserList;
